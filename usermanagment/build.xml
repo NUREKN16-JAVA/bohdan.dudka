@@ -1,0 +1,61 @@
+<project name="usermanagment" basedir="." default="test">
+    <property name="built-dir" value="${basedir}/out/production/usermanagment"/>
+    <property name="classes-dir" value="${built-dir}/classes"/>
+    <property name="main-dir" value="${basedir}/src/main/java"/>
+    <property name="test-java-dir" value="${basedir}/src/test/java"/>
+    <property name="src-dir" value="${basedir}/src"/>
+    <property name="java-sdk" value="1.6"/>
+
+    <path id="classpath.base"/>
+
+    <path id="classpath.test">
+        <pathelement location="lib/junit-4.10.jar"/>
+        <pathelement location="${test-java-dir}"/>
+        <pathelement location="${main-dir}"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${built-dir}" failonerror="no"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${built-dir}"/>
+        <mkdir dir="${classes-dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac includeantruntime="false" srcdir="${src-dir}" destdir="${built-dir}">
+            <classpath refid="classpath.test"/>
+        </javac>
+    </target>
+
+   <!-- <target name="test-compile" depends="init">
+        <javac includeantruntime="false" srcdir="${test-java-dir}" destdir="${built-dir}"/>
+    </target>-->
+    <target name="test-compile" depends="init">
+        <javac includeantruntime="false" destdir="${built-dir}">
+            <src path="${main-dir}"/>
+            <src path="${test-java-dir}"/>
+            <classpath>
+                <pathelement location="lib/junit-4.10.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="test" depends="compile">
+        <junit printsummary="on" haltonfailure="yes" haltonerror="yes">
+            <classpath>
+                <pathelement location="lib/junit-4.10.jar"/>
+                <pathelement location="${built-dir}"/>
+            </classpath>
+
+            <test name="UserTest"/>
+        </junit>
+        <junitreport todir=".">
+            <fileset dir=".">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report todir="." />
+        </junitreport>
+    </target>
+</project>
