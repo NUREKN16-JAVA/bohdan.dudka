@@ -53,6 +53,12 @@ class User {
 
     long getAge() {
         LocalDate date = LocalDate.now();
-        return date.getYear() - dateOfBirth.getYear();
+        int age = date.getYear() - dateOfBirth.getYear();
+        if (date.getMonthValue() < dateOfBirth.getMonthValue() ||
+                (date.getMonthValue() == dateOfBirth.getMonthValue() && date.getDayOfMonth() < dateOfBirth.getDayOfMonth())) {
+            --age;
+        }
+
+        return age;
     }
 }

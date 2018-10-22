@@ -12,11 +12,10 @@ public class UserTest {
     private static final long ID = 1L;
     private static final String FIRSTNAME = "Иван";
     private static final String LASTNAME = "Иванов";
-    private static final LocalDate DATEOFBIRTH = LocalDate.of(2014, 4, 29);
 
     @Before
     public void setUp()  throws Exception {
-        user = new User(ID, FIRSTNAME, LASTNAME, DATEOFBIRTH);
+        user = new User(ID, FIRSTNAME, LASTNAME, null);
     }
 
     @Test
@@ -25,7 +24,38 @@ public class UserTest {
     }
 
     @Test
-    public void testGetAge() throws Exception {
-        assertEquals(2018 - 2014, user.getAge());
+    public void testGetAgeAfter() throws Exception {
+        LocalDate localDate =LocalDate.of(1998, 4, 8);
+        User user = new User(ID, FIRSTNAME, LASTNAME, localDate);
+        assertEquals(20, user.getAge());
+    }
+
+    @Test
+    public void testGetAgeBefore() throws Exception {
+        LocalDate localDate = LocalDate.of(1998, 12, 13);
+        User user = new User(ID, FIRSTNAME, LASTNAME, localDate);
+        assertEquals(19, user.getAge());
+    }
+
+    @Test
+    public void testGetAgeSameMonthAfter() throws Exception {
+        LocalDate localDate = LocalDate.of(1998, 10, 10);
+        User user = new User(ID, FIRSTNAME, LASTNAME, localDate);
+        assertEquals(20, user.getAge());
+    }
+
+    @Test
+    public void testGetAgeSameMonthBefore() throws Exception {
+        LocalDate localDate = LocalDate.of(1998, 10, 29);
+        User user = new User(ID, FIRSTNAME, LASTNAME, localDate);
+        assertEquals(19, user.getAge());
+    }
+
+    @Test
+    public void testGetAgeSameDay () throws Exception {
+        LocalDate localDate = LocalDate.now();
+        localDate = localDate.withYear(1998);
+        User user = new User(ID, FIRSTNAME, LASTNAME, localDate);
+        assertEquals(20, user.getAge());
     }
 }
