@@ -15,17 +15,17 @@ public class UserTest {
     private static final LocalDate DATEOFBIRTH = LocalDate.of(2014, 4, 29);
 
     @Before
-    public void setUp() {
+    public void setUp()  throws Exception {
         user = new User(ID, FIRSTNAME, LASTNAME, DATEOFBIRTH);
     }
 
     @Test
-    public void testGetFullName() {
+    public void testGetFullName() throws Exception {
         assertEquals("Иванов, Иван", user.getFullName());
     }
 
     @Test
-    public void testGetAge() {
+    public void testGetAge() throws Exception {
         assertEquals(2018 - 2014, user.getAge());
     }
 }
