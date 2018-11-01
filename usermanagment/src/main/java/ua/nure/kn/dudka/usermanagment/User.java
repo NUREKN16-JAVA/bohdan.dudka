@@ -1,7 +1,9 @@
 package ua.nure.kn.dudka.usermanagment;
 
 import java.time.LocalDate;
-
+/**
+* Class User contains information about user
+* */
 class User {
     private long id;
     private String firstName;
@@ -47,10 +49,18 @@ class User {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    /**
+    * @return user's full name in format "First name, Last name"
+    * */
     String getFullName() {
         return lastName + ", " + firstName;
     }
 
+    /**
+     * This method expects correct birth date established in the past
+     * @return user's age in years
+     */
     long getAge() {
         LocalDate date = LocalDate.now();
         int age = date.getYear() - dateOfBirth.getYear();
