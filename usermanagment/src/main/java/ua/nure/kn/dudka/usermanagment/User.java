@@ -4,7 +4,7 @@ import java.time.LocalDate;
 /**
 * Class User contains information about user
 * */
-class User {
+public class User {
     private long id;
     private String firstName;
     private String lastName;
