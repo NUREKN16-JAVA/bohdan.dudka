@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class UserTest {
     private User user;
-    private static final long ID = 1L;
+    private static final Long ID = 1L;
     private static final String FIRSTNAME = "Иван";
     private static final String LASTNAME = "Иванов";
 

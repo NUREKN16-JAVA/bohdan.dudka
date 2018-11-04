@@ -5,20 +5,22 @@ import java.time.LocalDate;
 * Class User contains information about user
 * */
 public class User {
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
 
 
-    User(long id, String firstName, String lastName, LocalDate dateOfBirth) {
+    public User(Long id, String firstName, String lastName, LocalDate dateOfBirth) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
     }
 
-    public long getId() {
+    public User() {}
+
+    public Long getId() {
         return id;
     }
 
@@ -70,5 +72,15 @@ public class User {
         }
 
         return age;
+    }
+
+    public static void main(String[] args) {
+        Long l1 = null;
+
+        met(l1);
+    }
+
+    public static void met(Long l) {
+        System.out.println(l);
     }
 }

@@ -7,7 +7,8 @@ import java.util.Collection;
 public class HsqlDBUserDAO implements UserDAO {
     @Override
     public User create(User user) throws DataBaseException {
-        return null;
+        user.setId(1);
+        return user;
     }
 
     @Override
