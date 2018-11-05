@@ -7,6 +7,7 @@ import ua.nure.kn.dudka.usermanagment.User;
 import java.time.LocalDate;
 
 public class HsqlDBUserDAOTest {
+    private ConnectionFactory connectionFactory;
     private HsqlDBUserDAO dao;
     private final Long ID = 1L;
     private final String FIRSTNAME = "Иван";
@@ -15,7 +16,8 @@ public class HsqlDBUserDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new HsqlDBUserDAO();
+        connectionFactory = new ConnectionFactoryImpl();
+        dao = new HsqlDBUserDAO(connectionFactory);
     }
 
     @Test

@@ -73,14 +73,4 @@ public class User {
 
         return age;
     }
-
-    public static void main(String[] args) {
-        Long l1 = null;
-
-        met(l1);
-    }
-
-    public static void met(Long l) {
-        System.out.println(l);
-    }
 }

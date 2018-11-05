@@ -5,6 +5,14 @@ import ua.nure.kn.dudka.usermanagment.User;
 import java.util.Collection;
 
 public class HsqlDBUserDAO implements UserDAO {
+    private ConnectionFactory connectionFactory;
+
+    HsqlDBUserDAO () {}
+
+    HsqlDBUserDAO (ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
     @Override
     public User create(User user) throws DataBaseException {
         user.setId(1);
