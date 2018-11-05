@@ -36,11 +36,15 @@ public class HsqlDBUserDAO implements UserDAO {
                 user.setId(keys.getLong(1));
             }
 
+
+            connection.close();
+            statement.close();
+            callableStatement.close();
+            keys.close();
         } catch (SQLException | DataBaseException e) {
             throw new DataBaseException(e.toString());
         }
-
-
+        
         return user;
     }
 
