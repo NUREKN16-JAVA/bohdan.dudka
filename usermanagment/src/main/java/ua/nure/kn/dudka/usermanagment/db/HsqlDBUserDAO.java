@@ -2,10 +2,7 @@ package ua.nure.kn.dudka.usermanagment.db;
 
 import ua.nure.kn.dudka.usermanagment.User;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -32,9 +29,18 @@ public class HsqlDBUserDAO implements UserDAO {
             if (insertedRows != 1)
                 throw new DataBaseException("Number of inserted rows: " + insertedRows);
 
+            CallableStatement callableStatement = connection.prepareCall("call IDENTITY()");
+            ResultSet keys = callableStatement.executeQuery();
+
+            if (keys.next()) {
+                user.setId(keys.getLong(1));
+            }
+
         } catch (SQLException | DataBaseException e) {
             throw new DataBaseException(e.toString());
         }
+
+
         return user;
     }
 
