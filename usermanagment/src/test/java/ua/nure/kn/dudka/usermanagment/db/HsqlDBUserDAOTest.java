@@ -12,6 +12,7 @@ public class HsqlDBUserDAOTest {
     private final Long ID = 1L;
     private final String FIRSTNAME = "Иван";
     private final String LASTNAME = "Иванов";
+    private final LocalDate DATEOFBIRTH = LocalDate.of(1998, 10, 20);
 
 
     @Before
