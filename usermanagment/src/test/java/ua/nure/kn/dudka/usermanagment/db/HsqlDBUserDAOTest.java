@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import ua.nure.kn.dudka.usermanagment.User;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 public class HsqlDBUserDAOTest extends DatabaseTestCase {
     private ConnectionFactory connectionFactory;
@@ -50,8 +51,21 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
             assertNotNull(user);
             assertNotNull(user.getId());
         } catch (DataBaseException e) {
-            e.printStackTrace();
             e.getMessage();
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testFindAll() {
+        try{
+            int ExpectedCollectionSize = 2;
+            Collection AllUsers = dao.findAll();
+            assertNotNull("Collection is null", AllUsers);
+            assertEquals("Collection size.", ExpectedCollectionSize, AllUsers.size());
+        } catch (DataBaseException e) {
+            e.getMessage();
+            e.printStackTrace();
         }
     }
 }
