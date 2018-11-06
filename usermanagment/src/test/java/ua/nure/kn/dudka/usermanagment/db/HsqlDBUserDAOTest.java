@@ -1,12 +1,17 @@
 package ua.nure.kn.dudka.usermanagment.db;
 
+import org.dbunit.DatabaseTestCase;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.XmlDataSet;
 import org.junit.*;
 import static org.junit.Assert.*;
 import ua.nure.kn.dudka.usermanagment.User;
 
 import java.time.LocalDate;
 
-public class HsqlDBUserDAOTest {
+public class HsqlDBUserDAOTest extends DatabaseTestCase {
     private ConnectionFactory connectionFactory;
     private HsqlDBUserDAO dao;
     private final Long ID = 1L;
@@ -14,6 +19,18 @@ public class HsqlDBUserDAOTest {
     private final String LASTNAME = "Иванов";
     private final LocalDate DATEOFBIRTH = LocalDate.of(1998, 10, 20);
 
+
+    @Override
+    protected IDatabaseConnection getConnection() throws Exception {
+        connectionFactory = new ConnectionFactoryImpl();
+        return  new DatabaseConnection(connectionFactory.createConnection());
+    }
+
+    @Override
+    protected IDataSet getDataSet() throws Exception {
+        IDataSet dataSet = new XmlDataSet(getClass().getClassLoader().getResourceAsStream("usersDataSet.xml"));
+        return dataSet;
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -24,11 +41,10 @@ public class HsqlDBUserDAOTest {
     @Test
     public void testCreate() {
         try {
-            LocalDate date = LocalDate.now().withYear(1998);
             User user = new User();
             user.setFirstName(FIRSTNAME);
             user.setLastName(LASTNAME);
-            user.setDateOfBirth(date);
+            user.setDateOfBirth(DATEOFBIRTH);
             assertNull(user.getId());
             user = dao.create(user);
             assertNotNull(user);

@@ -20,7 +20,7 @@ public class HsqlDBUserDAO implements UserDAO {
         Connection connection = connectionFactory.createConnection();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO users(firstname, lastname, dateofbirth) VALUE (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO users(firstname, lastname, dateofbirth) VALUES (?, ?, ?)");
             statement.setString(1, user.getFirstName());
             statement.setString(2, user.getLastName());
             statement.setDate(3, Date.valueOf(user.getDateOfBirth()));
@@ -44,7 +44,6 @@ public class HsqlDBUserDAO implements UserDAO {
         } catch (SQLException | DataBaseException e) {
             throw new DataBaseException(e.toString());
         }
-        
         return user;
     }
 
