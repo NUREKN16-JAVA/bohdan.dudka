@@ -7,6 +7,7 @@ import java.util.Set;
 public class DAOFactory {
     private final Properties properties;
     private final static DAOFactory INSTANCE = new DAOFactory();
+    private UserDAO userDAO;
 
     DAOFactory () {
         properties = new Properties();
@@ -31,14 +32,14 @@ public class DAOFactory {
     }
 
     public UserDAO getUserDAO () throws ReflectiveOperationException {
-        UserDAO result = null;
         try {
             Class UserDOAClass = Class.forName(properties.getProperty("dao.ua.nure.kn.dudka.usermanagment.db.UserDAO"));
-            UserDAO userDAO = (UserDAO) UserDOAClass.newInstance();
+            userDAO = (UserDAO) UserDOAClass.newInstance();
+            userDAO.setConnectionFactory(createConnection());
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             throw new ReflectiveOperationException(e);
         }
 
-        return result;
+        return userDAO;
     }
 }

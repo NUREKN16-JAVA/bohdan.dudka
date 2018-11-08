@@ -10,6 +10,8 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
     private String url;
     private String driver;
 
+    ConnectionFactoryImpl() {}
+
     ConnectionFactoryImpl(String user, String password, String url, String driver) {
         this.user = user;
         this.password = password;

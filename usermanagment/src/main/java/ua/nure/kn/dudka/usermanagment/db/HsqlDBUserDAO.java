@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class HsqlDBUserDAO implements UserDAO {
+class HsqlDBUserDAO implements UserDAO {
     private ConnectionFactory connectionFactory;
-    private String INSERT_USER = "INSERT INTO users(firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
+    private String INSERT_USER = "INSERT INTO USERS (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
     private String CALL_IDENTITY = "call IDENTITY()";
     private String FIND_ALL_USERS = "SELECT id, firstname, lastname, dateofbirth FROM users";
 
