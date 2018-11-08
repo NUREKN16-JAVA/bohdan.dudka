@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class DAOFactory {
     private final Properties properties;
+    private final static DAOFactory INSTANCE = new DAOFactory();
 
     DAOFactory () {
         properties = new Properties();
@@ -14,6 +15,10 @@ public class DAOFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static DAOFactory getInstance() {
+        return INSTANCE;
     }
 
     private ConnectionFactory createConnection () {
