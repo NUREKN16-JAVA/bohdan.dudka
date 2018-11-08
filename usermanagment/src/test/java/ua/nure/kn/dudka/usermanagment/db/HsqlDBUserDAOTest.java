@@ -17,8 +17,8 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
     private ConnectionFactory connectionFactory;
     private UserDAO dao;
     private final Long ID = 1L;
-    private final String FIRSTNAME = "Иван";
-    private final String LASTNAME = "Иванов";
+    private final String FIRSTNAME = "Ivan";
+    private final String LASTNAME = "Petrov";
     private final LocalDate DATEOFBIRTH = LocalDate.of(1998, 10, 20);
 
 
@@ -41,31 +41,52 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
     }
 
     @Test
-    public void testCreate() {
-        try {
-            Assert.assertNull(user.getId());
-            User ResulUser = dao.create(user);
-            Assert.assertNotNull(ResulUser);
-            Assert.assertNotNull(ResulUser.getId());
-            Assert.assertEquals(user.getFirstName(), ResulUser.getFirstName());
-            Assert.assertEquals(user.getLastName(), ResulUser.getLastName());
-            Assert.assertEquals(user.getDateOfBirth(), ResulUser.getDateOfBirth());
-        } catch (DataBaseException e) {
-            e.getMessage();
-            e.printStackTrace();
-        }
+    public void testCreate() throws DataBaseException {
+        Assert.assertNull(user.getId());
+        User ResulUser = dao.create(user);
+        Assert.assertNotNull(ResulUser);
+        Assert.assertNotNull(ResulUser.getId());
+        Assert.assertEquals(user.getFirstName(), ResulUser.getFirstName());
+        Assert.assertEquals(user.getLastName(), ResulUser.getLastName());
+        Assert.assertEquals(user.getDateOfBirth(), ResulUser.getDateOfBirth());
     }
 
     @Test
-    public void testFindAll() {
-        try{
-            int ExpectedCollectionSize = 2;
-            Collection AllUsers = dao.findAll();
-            Assert.assertNotNull("Collection is null", AllUsers);
-            Assert.assertEquals("Collection size.", ExpectedCollectionSize, AllUsers.size());
-        } catch (DataBaseException e) {
-            e.getMessage();
-            e.printStackTrace();
-        }
+    public void testFind () throws DataBaseException {
+        User testUser = dao.find(ID);
+        Assert.assertNotNull(testUser);
+        Assert.assertEquals(testUser.getFirstName(), user.getFirstName());
+        Assert.assertEquals(testUser.getLastName(), user.getLastName());
+        Assert.assertEquals(testUser.getDateOfBirth(), user.getDateOfBirth());
+    }
+
+    @Test
+    public void testFindAll() throws DataBaseException {
+        User testUser = dao.create(user);
+        int ExpectedCollectionSize = 3;
+        Collection AllUsers = dao.findAll();
+        Assert.assertNotNull("Collection is null", AllUsers);
+        Assert.assertEquals("Collection size.", ExpectedCollectionSize, AllUsers.size());
+    }
+
+    @Test
+    public void testUpdate () throws DataBaseException {
+        String testFirstName = "Sam";
+        String testLastName = "Smith";
+        LocalDate testDateOfBirth = LocalDate.now();
+        User testUser = new User(ID, testFirstName, testLastName, testDateOfBirth);
+        dao.update(testUser);
+        User updatedUser = dao.find(testUser.getId());
+        Assert.assertNotNull(updatedUser);
+        Assert.assertEquals(testUser.getFirstName(), updatedUser.getFirstName());
+        Assert.assertEquals(testUser.getLastName(), updatedUser.getLastName());
+        Assert.assertEquals(testUser.getDateOfBirth(), updatedUser.getDateOfBirth());
+    }
+
+    @Test
+    public void testDelete () throws DataBaseException {
+        User testUser = new User(ID, FIRSTNAME, LASTNAME, DATEOFBIRTH);
+        dao.delete(testUser);
+        Assert.assertNull(dao.find(ID));
     }
 }
