@@ -25,10 +25,15 @@ public class DAOFactory {
         return new ConnectionFactoryImpl(user, password, url, driver);
     }
 
-    public UserDAO getUserDAO () {
+    public UserDAO getUserDAO () throws ReflectiveOperationException {
         UserDAO result = null;
+        try {
+            Class UserDOAClass = Class.forName(properties.getProperty("dao.ua.nure.kn.dudka.usermanagment.db.UserDAO"));
+            UserDAO userDAO = (UserDAO) UserDOAClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            throw new ReflectiveOperationException(e);
+        }
 
         return result;
-
     }
 }
