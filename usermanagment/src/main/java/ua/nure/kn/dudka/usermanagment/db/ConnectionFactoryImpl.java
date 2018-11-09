@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Class to setup connection to DB via interface ConnectionFactory
+ */
 public class ConnectionFactoryImpl implements ConnectionFactory {
     private String user;
     private String password;
@@ -19,6 +22,11 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
         this.driver = driver;
     }
 
+    /**
+     * Method to
+     * @return Connection to DB via driver
+     * @throws DataBaseException
+     */
     @Override
     public Connection createConnection() throws DataBaseException {
         try {

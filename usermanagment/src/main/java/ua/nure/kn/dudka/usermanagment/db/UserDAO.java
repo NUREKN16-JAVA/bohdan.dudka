@@ -4,6 +4,9 @@ import ua.nure.kn.dudka.usermanagment.User;
 
 import java.util.Collection;
 
+/**
+ * Realize main logic for DAO
+ */
 public interface UserDAO {
     User create (User user) throws DataBaseException;
     void update (User user) throws DataBaseException;

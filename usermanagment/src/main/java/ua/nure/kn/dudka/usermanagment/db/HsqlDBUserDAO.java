@@ -3,10 +3,12 @@ package ua.nure.kn.dudka.usermanagment.db;
 import ua.nure.kn.dudka.usermanagment.User;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.LinkedList;
 
+/**
+ * Represents main DAO logic to work with DB
+ */
 class HsqlDBUserDAO implements UserDAO {
     private ConnectionFactory connectionFactory;
     private final String INSERT_USER = "INSERT INTO USERS (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
@@ -31,6 +33,12 @@ class HsqlDBUserDAO implements UserDAO {
         this.connectionFactory = connectionFactory;
     }
 
+    /**
+     * Creates a new row in DB
+     * @param user
+     * @return created user
+     * @throws DataBaseException
+     */
     @Override
     public User create(User user) throws DataBaseException {
         try {
@@ -61,6 +69,12 @@ class HsqlDBUserDAO implements UserDAO {
         return user;
     }
 
+    /**
+     * Updates user from DB.
+     * Looking for user to update by ID
+     * @param user
+     * @throws DataBaseException
+     */
     @Override
     public void update(User user) throws DataBaseException {
         try {
@@ -82,6 +96,12 @@ class HsqlDBUserDAO implements UserDAO {
         }
     }
 
+    /**
+     * Removes user from DB.
+     * Looking for user to remove by ID
+     * @param user
+     * @throws DataBaseException
+     */
     @Override
     public void delete(User user) throws DataBaseException {
         try {
@@ -102,6 +122,12 @@ class HsqlDBUserDAO implements UserDAO {
 
     }
 
+    /**
+     * Find user by ID
+     * @param id Long
+     * @return User user
+     * @throws DataBaseException
+     */
     @Override
     public User find(Long id) throws DataBaseException {
         User user = null;
@@ -131,6 +157,11 @@ class HsqlDBUserDAO implements UserDAO {
         return user;
     }
 
+    /**
+     * Finds all users in DB
+     * @return Collection of users
+     * @throws DataBaseException
+     */
     @Override
     public Collection findAll() throws DataBaseException {
         LinkedList<User> result = new LinkedList<>();

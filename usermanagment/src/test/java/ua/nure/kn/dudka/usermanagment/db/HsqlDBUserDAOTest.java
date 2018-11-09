@@ -12,6 +12,9 @@ import ua.nure.kn.dudka.usermanagment.User;
 import java.time.LocalDate;
 import java.util.Collection;
 
+/**
+ * Tests main interaction with DB
+ */
 public class HsqlDBUserDAOTest extends DatabaseTestCase {
     private User user;
     private ConnectionFactory connectionFactory;
@@ -20,7 +23,6 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
     private final String FIRSTNAME = "Ivan";
     private final String LASTNAME = "Petrov";
     private final LocalDate DATEOFBIRTH = LocalDate.of(1998, 10, 20);
-
 
     @Override
     protected IDatabaseConnection getConnection() throws Exception {
@@ -40,6 +42,10 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
         user = new User(null, FIRSTNAME, LASTNAME, DATEOFBIRTH);
     }
 
+    /**
+     * Tests method to create and insert new user to DB
+     * @throws DataBaseException
+     */
     @Test
     public void testCreate() throws DataBaseException {
         Assert.assertNull(user.getId());
@@ -51,6 +57,10 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
         Assert.assertEquals(user.getDateOfBirth(), ResulUser.getDateOfBirth());
     }
 
+    /**
+     * Tests method to find user by ID
+     * @throws DataBaseException
+     */
     @Test
     public void testFind () throws DataBaseException {
         User testUser = dao.find(ID);
@@ -60,6 +70,10 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
         Assert.assertEquals(testUser.getDateOfBirth(), user.getDateOfBirth());
     }
 
+    /**
+     * Tests method to find all users from DB
+     * @throws DataBaseException
+     */
     @Test
     public void testFindAll() throws DataBaseException {
         User testUser = dao.create(user);
@@ -69,6 +83,10 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
         Assert.assertEquals("Collection size.", ExpectedCollectionSize, AllUsers.size());
     }
 
+    /**
+     * Tests method to update user from DB with by passing new user with same ID
+     * @throws DataBaseException
+     */
     @Test
     public void testUpdate () throws DataBaseException {
         String testFirstName = "Sam";
@@ -83,6 +101,10 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
         Assert.assertEquals(testUser.getDateOfBirth(), updatedUser.getDateOfBirth());
     }
 
+    /**
+     * Tests method to delete user from DB
+     * @throws DataBaseException
+     */
     @Test
     public void testDelete () throws DataBaseException {
         User testUser = new User(ID, FIRSTNAME, LASTNAME, DATEOFBIRTH);
