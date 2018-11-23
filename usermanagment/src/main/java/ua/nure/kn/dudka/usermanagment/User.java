@@ -4,21 +4,23 @@ import java.time.LocalDate;
 /**
 * Class User contains information about user
 * */
-class User {
-    private long id;
+public class User {
+    private Long id;
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
 
 
-    User(long id, String firstName, String lastName, LocalDate dateOfBirth) {
+    public User(Long id, String firstName, String lastName, LocalDate dateOfBirth) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
     }
 
-    public long getId() {
+    public User() {}
+
+    public Long getId() {
         return id;
     }
 
