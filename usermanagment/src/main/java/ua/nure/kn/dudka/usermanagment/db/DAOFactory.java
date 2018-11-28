@@ -6,42 +6,53 @@ import java.util.Properties;
 /**
  * Class which realize factory for DAO. Realized with Singleton
  */
-public class DAOFactory {
-    private final Properties properties;
-    private final static DAOFactory INSTANCE = new DAOFactory();
-    private UserDAO userDAO;
+public abstract class DAOFactory {
+    private static final String DAO_FACTORY = "dao.factory";
+    protected static Properties properties;
+    private  static DAOFactory instance;
 
-    /**
-     * Constructor to read connection settings from file
-     */
-    DAOFactory () {
+    static {
         properties = new Properties();
         try {
-            properties.load(getClass().getClassLoader().getResourceAsStream("settings.properties"));
+            properties.load(DAOFactory.class.getClassLoader().getResourceAsStream("settings.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     /**
+     * Constructor to read connection settings from file
+     */
+    protected DAOFactory () {}
+
+    /**
      * Method to get current instance of DAOFactory object
      * @return Instance of DAOFactory to support Singleton
      */
-    public static DAOFactory getInstance() {
-        return INSTANCE;
+    public static synchronized DAOFactory getInstance() {
+        if (instance == null) {
+            try {
+                Class factoryClass = Class.forName(properties.getProperty(DAO_FACTORY));
+                instance = (DAOFactory) factoryClass.newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return instance;
+    }
+
+    public void init (Properties properties) {
+        DAOFactory.properties = properties;
+        instance = null;
     }
 
     /**
      * Method to setup settings from file and pass them to ConnectionFactoryImpl
      * @return ConnectionFactoryImpl object
      */
-    private ConnectionFactory createConnection () {
-        String user = properties.getProperty("connection.user");
-        String password = properties.getProperty("connection.password");
-        String url = properties.getProperty("connection.url");
-        String driver = properties.getProperty("connection.driver");
-
-        return new ConnectionFactoryImpl(user, password, url, driver);
+    protected ConnectionFactory createConnection () {
+               return new ConnectionFactoryImpl(properties);
     }
 
     /**
@@ -49,15 +60,5 @@ public class DAOFactory {
      * @return UserDOA object
      * @throws ReflectiveOperationException
      */
-    public UserDAO getUserDAO () throws ReflectiveOperationException {
-        try {
-            Class UserDOAClass = Class.forName(properties.getProperty("dao.ua.nure.kn.dudka.usermanagment.db.UserDAO"));
-            userDAO = (UserDAO) UserDOAClass.newInstance();
-            userDAO.setConnectionFactory(createConnection());
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new ReflectiveOperationException(e);
-        }
-
-        return userDAO;
-    }
+   abstract public UserDAO getUserDAO () throws ReflectiveOperationException;
 }
