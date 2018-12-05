@@ -15,6 +15,13 @@ public class MainFrame extends JFrame {
         initialize();
     }
 
+    public static void main(String[] args) {
+        MainFrame frame = new MainFrame();
+        frame.setVisible(true);
+
+
+    }
+
     private void initialize() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGTH);
@@ -27,7 +34,7 @@ public class MainFrame extends JFrame {
             contentPanel = new JPanel();
             contentPanel.setLayout(new BorderLayout());
             contentPanel.add(getBrowsePanel(), BorderLayout.CENTER);
-            
+
         }
         return contentPanel;
     }
@@ -39,10 +46,17 @@ public class MainFrame extends JFrame {
         return browsePanel;
     }
 
-    public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
-        frame.setVisible(true);
+    private void showPanel(JPanel panel) {
+        getContentPane().add(panel, BorderLayout.CENTER);
+        panel.setVisible(true);
+        panel.repaint();
+    }
 
+    public void showAddPanel() {
+        showPanel(getAddPanel());
+    }
 
+    private AddPanel getAddPanel() {
+        return null;
     }
 }

@@ -104,6 +104,11 @@ public class BrowsePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String action = e.getActionCommand();
+        if (action.equalsIgnoreCase("add")) {
+            this.setVisible(false);
+            parent.showAddPanel();
 
+        }
     }
 }
