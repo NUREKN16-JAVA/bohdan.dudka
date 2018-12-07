@@ -1,12 +1,14 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import ua.nure.kn.dudka.usermanagment.util.Message;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
 
     private static final int FRAME_HEIGTH = 600;
-    private static final int FRAME_WIDTH = 800;
+    private static final int FRAME_WIDTH = 1200;
     private JPanel contentPanel;
     private JPanel browsePanel;
     private AddPanel addPanel;
@@ -26,7 +28,7 @@ public class MainFrame extends JFrame {
     private void initialize() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(FRAME_WIDTH, FRAME_HEIGTH);
-        this.setTitle("User management");
+        this.setTitle(Message.getString("user_management"));
         this.setContentPane(getContentPanel());
     }
 

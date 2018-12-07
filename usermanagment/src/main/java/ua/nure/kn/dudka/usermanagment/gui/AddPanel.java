@@ -1,11 +1,15 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import ua.nure.kn.dudka.usermanagment.util.Message;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AddPanel extends JPanel implements ActionListener {
+    private final static int FRAME_HEIGTH = 400;
+    private static final int FRAME_WIDTH = 600;
     private MainFrame parent;
     private JButton cancelButton;
     private JButton okButton;
@@ -22,6 +26,7 @@ public class AddPanel extends JPanel implements ActionListener {
 
     private void initialize() {
         this.setName("addPanel");
+        this.setSize(FRAME_WIDTH, FRAME_HEIGTH);
         this.setLayout(new BorderLayout());
         this.add(getFieldPanel(), BorderLayout.NORTH);
         this.add(getButtonPanel(), BorderLayout.SOUTH);
@@ -42,8 +47,8 @@ public class AddPanel extends JPanel implements ActionListener {
         if (cancelButton == null) {
             cancelButton = new JButton();
             cancelButton.setName("cancelButton");
-            cancelButton.setText("Cancel");
-            cancelButton.setActionCommand("cancel");
+            cancelButton.setText(Message.getString("cancel_button"));
+            cancelButton.setActionCommand("cancel_button");
             cancelButton.addActionListener(this);
         }
 
@@ -54,7 +59,7 @@ public class AddPanel extends JPanel implements ActionListener {
         if (okButton == null) {
             okButton = new JButton();
             okButton.setName("okButton");
-            okButton.setText("Add");
+            okButton.setText(Message.getString("submit_button"));
             okButton.setActionCommand("ok");
             okButton.addActionListener(this);
         }
@@ -66,9 +71,9 @@ public class AddPanel extends JPanel implements ActionListener {
         if (fieldPanel == null) {
             fieldPanel = new JPanel();
             fieldPanel.setLayout(new GridLayout(3, 2));
-            addLabelField(fieldPanel, "Name", getFirstNameField());
-            addLabelField(fieldPanel, "Surname", getLastNameField());
-            addLabelField(fieldPanel, "Date of Birth", getDateOfBirthField());
+            addLabelField(fieldPanel, Message.getString("name_label"), getFirstNameField());
+            addLabelField(fieldPanel, Message.getString("surname_label"), getLastNameField());
+            addLabelField(fieldPanel, Message.getString("date.of.birth_label"), getDateOfBirthField());
         }
 
         return fieldPanel;

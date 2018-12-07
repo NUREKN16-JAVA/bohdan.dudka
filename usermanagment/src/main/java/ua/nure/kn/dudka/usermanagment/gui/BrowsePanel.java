@@ -1,5 +1,7 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import ua.nure.kn.dudka.usermanagment.util.Message;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -43,7 +45,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getAddButton() {
         if (addButton == null) {
             addButton = new JButton();
-            addButton.setText("Add user");
+            addButton.setText(Message.getString("add.user_button"));
             addButton.setName("addButton");
             addButton.setActionCommand("add");
             addButton.addActionListener(this);
@@ -55,7 +57,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getEditButton() {
         if (editButton == null) {
             editButton = new JButton();
-            editButton.setText("Edit user");
+            editButton.setText(Message.getString("edit.user_button"));
             editButton.setName("editButton");
             editButton.setActionCommand("edit");
             editButton.addActionListener(this);
@@ -67,7 +69,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getDeleteButton() {
         if (deleteButton == null) {
             deleteButton = new JButton();
-            deleteButton.setText("Delete user");
+            deleteButton.setText(Message.getString("delete.user_button"));
             deleteButton.setName("deleteButton");
             deleteButton.setActionCommand("delete");
             deleteButton.addActionListener(this);
@@ -79,7 +81,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton getDetailsButton() {
         if (detailsButton == null) {
             detailsButton = new JButton();
-            detailsButton.setText("User details");
+            detailsButton.setText(Message.getString("user.details_button"));
             detailsButton.setName("detailsButton");
             detailsButton.setActionCommand("details");
             detailsButton.addActionListener(this);
