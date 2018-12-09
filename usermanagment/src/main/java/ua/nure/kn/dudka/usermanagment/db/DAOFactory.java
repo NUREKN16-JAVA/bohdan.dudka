@@ -42,7 +42,7 @@ public abstract class DAOFactory {
         return instance;
     }
 
-    public void init (Properties properties) {
+    public static void init (Properties properties) {
         DAOFactory.properties = properties;
         instance = null;
     }
