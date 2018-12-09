@@ -2,9 +2,11 @@ package ua.nure.kn.dudka.usermanagment.gui;
 
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
+import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import org.junit.Assert;
+import ua.nure.kn.dudka.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +23,7 @@ public class MainFrameTest extends JFCTestCase {
 
     public void tearDown() throws Exception {
         mainFrame.setVisible(false);
-        getHelper().cleanUp(this);
+        TestHelper.cleanUp(this);
         super.tearDown();
     }
 
@@ -41,7 +43,21 @@ public class MainFrameTest extends JFCTestCase {
         find(JPanel.class, "browserPanel");
         find(JButton.class, "editButton");
         find(JButton.class, "addButton");
-        find(JTable.class, "userTable");
+
+        int expectedRowCount = 3;
+        String expectedFirstColumn = Message.getString("id");
+        String expectedSecondColumn = Message.getString("name");
+        String expectedThirdColumn = Message.getString("surname");
+
+        JTable table = (JTable) find(JTable.class, "userTable");
+
+        assertEquals(expectedRowCount, table.getColumnCount());
+
+        assertEquals(expectedFirstColumn, table.getColumnName(0));
+        assertEquals(expectedSecondColumn, table.getColumnName(1));
+        assertEquals(expectedThirdColumn, table.getColumnName(2));
+
+
     }
 
     public void testAddUser() {
