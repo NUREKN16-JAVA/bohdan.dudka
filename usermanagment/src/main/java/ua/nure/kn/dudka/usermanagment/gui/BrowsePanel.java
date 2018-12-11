@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class BrowsePanel extends JPanel implements ActionListener {
+    private static final String MESSAGE = "Are you sure you want to delete this user?";
     private JScrollPane tablePanel;
     private JButton detailsButton;
     private JButton deleteButton;
@@ -142,25 +143,36 @@ public class BrowsePanel extends JPanel implements ActionListener {
         return user;
     }
 
+    private void deleteUser(User user) {
+        int result = JOptionPane.showConfirmDialog(this, MESSAGE, "Confirm deleting",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                parent.getUserDAO().delete(user);
+                getUserTable().setModel(new UserTableModel(parent.getUserDAO().findAll()));
+            } catch (DataBaseException e1) {
+                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
         if (action.equalsIgnoreCase("add")) {
             this.setVisible(false);
             parent.showAddPanel();
-
         } else if (action.equalsIgnoreCase("details")) {
             User selectedUser = getSelectedUser();
             JOptionPane.showMessageDialog(this, selectedUser.toString(), "User info", JOptionPane.INFORMATION_MESSAGE);
         } else if (action.equalsIgnoreCase("delete")) {
             User selectedUser = getSelectedUser();
-
-            try {
-                parent.getUserDAO().delete(selectedUser);
-                getUserTable().setModel(new UserTableModel(parent.getUserDAO().findAll()));
-            } catch (DataBaseException e1) {
-                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            if (selectedUser != null) {
+                deleteUser(selectedUser);
             }
+        } else if (action.equalsIgnoreCase("edit")) {
+
         }
     }
 }
