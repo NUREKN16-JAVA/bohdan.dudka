@@ -73,4 +73,9 @@ public class User {
 
         return age;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + firstName + "\nSurname: " + lastName + "\nDate of Birth: " + dateOfBirth;
+    }
 }

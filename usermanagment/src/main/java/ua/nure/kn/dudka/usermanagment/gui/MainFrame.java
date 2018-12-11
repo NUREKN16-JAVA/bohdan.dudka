@@ -1,5 +1,7 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import ua.nure.kn.dudka.usermanagment.db.DAOFactory;
+import ua.nure.kn.dudka.usermanagment.db.UserDAO;
 import ua.nure.kn.dudka.usermanagment.util.Message;
 
 import javax.swing.*;
@@ -12,9 +14,19 @@ public class MainFrame extends JFrame {
     private JPanel contentPanel;
     private JPanel browsePanel;
     private AddPanel addPanel;
+    private UserDAO userDAO;
+
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
 
     MainFrame () {
         super();
+        try {
+            userDAO = DAOFactory.getInstance().getUserDAO();
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+        }
         initialize();
     }
 
@@ -46,6 +58,8 @@ public class MainFrame extends JFrame {
         if (browsePanel == null) {
             browsePanel = new BrowsePanel(this);
         }
+        ((BrowsePanel)browsePanel).initTable();
+
         return browsePanel;
     }
 

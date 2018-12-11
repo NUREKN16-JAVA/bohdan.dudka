@@ -1,5 +1,7 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import ua.nure.kn.dudka.usermanagment.User;
+import ua.nure.kn.dudka.usermanagment.db.DataBaseException;
 import ua.nure.kn.dudka.usermanagment.util.Message;
 
 import javax.swing.*;
@@ -103,11 +105,36 @@ public class BrowsePanel extends JPanel implements ActionListener {
         if (userTable == null) {
             userTable = new JTable();
             userTable.setName("userTable");
-            UserTableModel model = new UserTableModel(new ArrayList());
-            userTable.setModel(model);
         }
 
         return userTable;
+    }
+
+    public void initTable() {
+        UserTableModel model = null;
+        try {
+            model = new UserTableModel(parent.getUserDAO().findAll());
+        } catch (DataBaseException e) {
+            model = new UserTableModel(new ArrayList());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        getUserTable().setModel(model);
+    }
+
+    private User getUserDetails() {
+        User user = null;
+        Long userId = null;
+
+        try {
+            userId = (Long) userTable.getValueAt(userTable.getSelectedRow(), userTable.getSelectedColumn());
+            user =  parent.getUserDAO().find(userId);
+        } catch (DataBaseException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Invalid field selected! Select field with user ID", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return user;
     }
 
     @Override
@@ -117,6 +144,8 @@ public class BrowsePanel extends JPanel implements ActionListener {
             this.setVisible(false);
             parent.showAddPanel();
 
+        } else if (action.equalsIgnoreCase("details")) {
+            JOptionPane.showMessageDialog(this, getUserDetails().toString(), "User info", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

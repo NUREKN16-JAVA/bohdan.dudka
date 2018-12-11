@@ -1,15 +1,19 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import ua.nure.kn.dudka.usermanagment.User;
+import ua.nure.kn.dudka.usermanagment.db.DataBaseException;
 import ua.nure.kn.dudka.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class AddPanel extends JPanel implements ActionListener {
     private final static int FRAME_HEIGTH = 400;
     private static final int FRAME_WIDTH = 600;
+    private Color bgColor = Color.WHITE;
     private MainFrame parent;
     private JButton cancelButton;
     private JButton okButton;
@@ -115,7 +119,35 @@ public class AddPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if ("ok".equalsIgnoreCase(e.getActionCommand())) {
+            User user = new User();
+            user.setFirstName(getFirstNameField().getText());
+            user.setLastName(getLastNameField().getText());
+            try {
+                user.setDateOfBirth(LocalDate.parse(getDateOfBirthField().getText()));
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(this, e1.getMessage() + "\nCorrect form is 'yyyy-mm-dd'", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            try {
+                parent.getUserDAO().create(user);
+            } catch (DataBaseException e1) {
+                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        clearFields();
         this.setVisible(false);
         parent.showBrowsePanel();
+    }
+
+    private void clearFields() {
+        getFirstNameField().setText("");
+        getFirstNameField().setBackground(bgColor);
+
+        getLastNameField().setText("");
+        getLastNameField().setBackground(bgColor);
+
+        getDateOfBirthField().setText("");
+        getDateOfBirthField().setBackground(bgColor);
     }
 }
