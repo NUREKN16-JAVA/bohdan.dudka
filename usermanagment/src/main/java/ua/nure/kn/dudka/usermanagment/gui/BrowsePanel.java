@@ -121,17 +121,22 @@ public class BrowsePanel extends JPanel implements ActionListener {
         getUserTable().setModel(model);
     }
 
-    private User getUserDetails() {
-        User user = null;
+    private User getSelectedUser() {
+        int selectedRow = getUserTable().getSelectedRow();
+        int selectedColumn = 0;
         Long userId = null;
+        User user = null;
 
-        try {
-            userId = (Long) userTable.getValueAt(userTable.getSelectedRow(), userTable.getSelectedColumn());
-            user =  parent.getUserDAO().find(userId);
-        } catch (DataBaseException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Invalid field selected! Select field with user ID", "Error", JOptionPane.ERROR_MESSAGE);
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please, select row of user, details of whom you want to see",
+                                            "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                userId = (Long) userTable.getValueAt(userTable.getSelectedRow(), selectedColumn);
+                user =  parent.getUserDAO().find(userId);
+            } catch (DataBaseException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         return user;
@@ -145,7 +150,17 @@ public class BrowsePanel extends JPanel implements ActionListener {
             parent.showAddPanel();
 
         } else if (action.equalsIgnoreCase("details")) {
-            JOptionPane.showMessageDialog(this, getUserDetails().toString(), "User info", JOptionPane.INFORMATION_MESSAGE);
+            User selectedUser = getSelectedUser();
+            JOptionPane.showMessageDialog(this, selectedUser.toString(), "User info", JOptionPane.INFORMATION_MESSAGE);
+        } else if (action.equalsIgnoreCase("delete")) {
+            User selectedUser = getSelectedUser();
+
+            try {
+                parent.getUserDAO().delete(selectedUser);
+                getUserTable().setModel(new UserTableModel(parent.getUserDAO().findAll()));
+            } catch (DataBaseException e1) {
+                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
