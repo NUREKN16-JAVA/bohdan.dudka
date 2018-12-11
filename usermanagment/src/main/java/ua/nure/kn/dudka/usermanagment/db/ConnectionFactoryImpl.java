@@ -3,6 +3,7 @@ package ua.nure.kn.dudka.usermanagment.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Class to setup connection to DB via interface ConnectionFactory
@@ -20,6 +21,13 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
         this.password = password;
         this.url =  url;
         this.driver = driver;
+    }
+
+    ConnectionFactoryImpl(Properties properties) {
+        this.user = properties.getProperty("connection.user");
+        this.password = properties.getProperty("connection.password");
+        this.url = properties.getProperty("connection.url");
+        this.driver = properties.getProperty("connection.driver");
     }
 
     /**
