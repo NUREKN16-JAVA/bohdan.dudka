@@ -1,5 +1,6 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import com.mockobjects.dynamic.Mock;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
@@ -7,41 +8,50 @@ import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import org.junit.Assert;
+import ua.nure.kn.dudka.usermanagment.User;
 import ua.nure.kn.dudka.usermanagment.db.DAOFactory;
-import ua.nure.kn.dudka.usermanagment.db.DaoFactoryImpl;
-import ua.nure.kn.dudka.usermanagment.db.MockUserDAO;
+import ua.nure.kn.dudka.usermanagment.db.MockDaoFactory;
 import ua.nure.kn.dudka.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class MainFrameTest extends JFCTestCase {
     private MainFrame mainFrame;
+    private Mock mockUserDAO;
 
     public void setUp() throws Exception {
         super.setUp();
 
-        Properties properties = new Properties();
-        properties.setProperty("dao.ua.nure.kn.dudka.usermanagment.db.UserDAO",
-                MockUserDAO.class.getName());
+        try {
+            Properties properties = new Properties();
+            properties.setProperty("dao.factory", MockDaoFactory.class.getName());
 
-        properties.setProperty("dao.factory", DaoFactoryImpl.class.getName());
+            DAOFactory.init(properties);
 
-        DAOFactory.init(properties);
+            mockUserDAO = ((MockDaoFactory) DAOFactory.getInstance()).getMockUserDao();
+            mockUserDAO.expectAndReturn("findAll", new ArrayList<>());
 
-        setHelper(new JFCTestHelper());
-        mainFrame = new MainFrame();
+            setHelper(new JFCTestHelper());
+            mainFrame = new MainFrame();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mainFrame.setVisible(true);
     }
 
     public void tearDown() throws Exception {
-        mainFrame.setVisible(false);
-        TestHelper.cleanUp(this);
-        super.tearDown();
+        try {
+            mockUserDAO.verify();
+            mainFrame.setVisible(false);
+            TestHelper.cleanUp(this);
+            super.tearDown();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private Component find(Class componentElement, String name) {
@@ -78,6 +88,19 @@ public class MainFrameTest extends JFCTestCase {
     }
 
     public void testAddUser() {
+        String firstName = "Ivan";
+        String lastName = "Ivanov";
+        LocalDate dateOfBirth = LocalDate.now();
+
+        User user = new User(firstName, lastName, dateOfBirth);
+        User expectedUser = new User(1L, firstName, lastName, dateOfBirth);
+
+        mockUserDAO.expectAndReturn("create", user, expectedUser);
+
+        ArrayList<User> userList = new ArrayList<>();
+        userList.add(expectedUser);
+        mockUserDAO.expectAndReturn("findAll", userList);
+
         JTable table = (JTable) find(JTable.class, "userTable");
         int expectedRows = 0;
         assertEquals(expectedRows, table.getRowCount());
@@ -89,16 +112,13 @@ public class MainFrameTest extends JFCTestCase {
         find(JButton.class, "cancelButton");
 
         JTextField firstNameField = (JTextField) find(JTextField.class, "firstNameField");
-        JTextField dateOfBirthField = (JTextField) find(JTextField.class, "dateOfBirth");
+        JTextField dateOfBirthField = (JTextField) find(JTextField.class, "dateOfBirthField");
         JTextField lastNameField = (JTextField) find(JTextField.class, "lastNameField");
         JButton okButton = (JButton) find(JButton.class, "okButton");
 
-        LocalDate testLocalDate = LocalDate.now();
-        String testDate = testLocalDate.toString();
-
-        getHelper().sendString(new StringEventData(this, firstNameField, "Ivan"));
-        getHelper().sendString(new StringEventData(this, lastNameField, "Ivanov"));
-        getHelper().sendString(new StringEventData(this, dateOfBirthField, testDate));
+        getHelper().sendString(new StringEventData(this, firstNameField, firstName));
+        getHelper().sendString(new StringEventData(this, lastNameField, lastName));
+        getHelper().sendString(new StringEventData(this, dateOfBirthField, String.valueOf(dateOfBirth)));
 
         getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
 
