@@ -1,5 +1,6 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
+import ua.nure.kn.dudka.usermanagment.User;
 import ua.nure.kn.dudka.usermanagment.db.DAOFactory;
 import ua.nure.kn.dudka.usermanagment.db.UserDAO;
 import ua.nure.kn.dudka.usermanagment.util.Message;
@@ -11,6 +12,7 @@ public class MainFrame extends JFrame {
 
     private static final int FRAME_HEIGTH = 600;
     private static final int FRAME_WIDTH = 1200;
+    private EditPanel editPanel;
     private JPanel contentPanel;
     private JPanel browsePanel;
     private AddPanel addPanel;
@@ -84,5 +86,20 @@ public class MainFrame extends JFrame {
 
     public void showBrowsePanel() {
         showPanel(getBrowsePanel());
+    }
+
+    public void showEditPanel() {
+        showPanel(getEditPanel());
+    }
+
+    private EditPanel getEditPanel() {
+        if (editPanel == null) {
+            editPanel = new EditPanel(this);
+        }
+        return editPanel;
+    }
+
+    public User getSelectedUser() {
+        return ((BrowsePanel)browsePanel).getSelectedUser();
     }
 }

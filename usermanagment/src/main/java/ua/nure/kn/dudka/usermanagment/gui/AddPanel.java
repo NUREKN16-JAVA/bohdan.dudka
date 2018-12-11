@@ -127,6 +127,7 @@ public class AddPanel extends JPanel implements ActionListener {
                 user.setDateOfBirth(LocalDate.parse(getDateOfBirthField().getText()));
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(this, e1.getMessage() + "\nCorrect form is 'yyyy-mm-dd'", "Error", JOptionPane.ERROR_MESSAGE);
+                getDateOfBirthField().setBackground(Color.RED);
             }
 
             try {

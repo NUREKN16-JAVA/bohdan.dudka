@@ -122,7 +122,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
         getUserTable().setModel(model);
     }
 
-    private User getSelectedUser() {
+    public User getSelectedUser() {
         int selectedRow = getUserTable().getSelectedRow();
         int selectedColumn = 0;
         Long userId = null;
@@ -172,7 +172,16 @@ public class BrowsePanel extends JPanel implements ActionListener {
                 deleteUser(selectedUser);
             }
         } else if (action.equalsIgnoreCase("edit")) {
+            int selectedRow = userTable.getSelectedRow();
+            int selectedColumn = userTable.getSelectedColumn();
 
+            if (selectedRow != -1 | selectedColumn != -1) {
+                this.setVisible(false);
+                parent.showEditPanel();
+            } else {
+                JOptionPane.showMessageDialog(this, "Please, select row of user, details of whom you want to see",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
