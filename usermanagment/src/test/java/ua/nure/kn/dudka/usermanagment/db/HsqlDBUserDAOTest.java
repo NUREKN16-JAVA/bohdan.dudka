@@ -1,6 +1,5 @@
 package ua.nure.kn.dudka.usermanagment.db;
 
-import junit.framework.TestCase;
 import org.dbunit.DatabaseTestCase;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -63,7 +62,7 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
      */
     @Test
     public void testFind () throws DataBaseException {
-        User testUser = dao.find(ID);
+        User testUser = dao.find(10L);
         Assert.assertNotNull(testUser);
         Assert.assertEquals(testUser.getFirstName(), user.getFirstName());
         Assert.assertEquals(testUser.getLastName(), user.getLastName());
@@ -77,7 +76,7 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
     @Test
     public void testFindAll() throws DataBaseException {
         User testUser = dao.create(user);
-        int ExpectedCollectionSize = 3;
+        int ExpectedCollectionSize = 6;
         Collection AllUsers = dao.findAll();
         Assert.assertNotNull("Collection is null", AllUsers);
         Assert.assertEquals("Collection size.", ExpectedCollectionSize, AllUsers.size());
@@ -92,7 +91,7 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
         String testFirstName = "Sam";
         String testLastName = "Smith";
         LocalDate testDateOfBirth = LocalDate.now();
-        User testUser = new User(ID, testFirstName, testLastName, testDateOfBirth);
+        User testUser = new User(13L, testFirstName, testLastName, testDateOfBirth);
         dao.update(testUser);
         User updatedUser = dao.find(testUser.getId());
         Assert.assertNotNull(updatedUser);
@@ -107,7 +106,7 @@ public class HsqlDBUserDAOTest extends DatabaseTestCase {
      */
     @Test
     public void testDelete () throws DataBaseException {
-        User testUser = new User(ID, FIRSTNAME, LASTNAME, DATEOFBIRTH);
+        User testUser = new User(13L, FIRSTNAME, LASTNAME, DATEOFBIRTH);
         dao.delete(testUser);
         Assert.assertNull(dao.find(ID));
     }

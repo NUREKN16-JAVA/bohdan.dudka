@@ -40,7 +40,7 @@ public class UserTest {
     public void testGetAgeBefore() throws Exception {
         LocalDate localDate = LocalDate.of(1998, 12, 13);
         User user = new User(ID, FIRSTNAME, LASTNAME, localDate);
-        assertEquals(19, user.getAge());
+        assertEquals(20, user.getAge());
     }
 
     // Birthday in current month already passed
@@ -56,7 +56,7 @@ public class UserTest {
     public void testGetAgeSameMonthBefore() throws Exception {
         LocalDate localDate = LocalDate.of(1998, 10, 31);
         User user = new User(ID, FIRSTNAME, LASTNAME, localDate);
-        assertEquals(19, user.getAge());
+        assertEquals(20, user.getAge());
     }
 
     // Birthday is today
