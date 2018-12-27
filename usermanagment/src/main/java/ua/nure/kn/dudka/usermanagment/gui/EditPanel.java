@@ -1,7 +1,7 @@
 package ua.nure.kn.dudka.usermanagment.gui;
 
 import ua.nure.kn.dudka.usermanagment.User;
-import ua.nure.kn.dudka.usermanagment.db.DataBaseException;
+import ua.nure.kn.dudka.usermanagment.db.exception.DataBaseException;
 import ua.nure.kn.dudka.usermanagment.util.Message;
 
 import javax.swing.*;

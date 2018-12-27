@@ -7,6 +7,7 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.junit.*;
 import ua.nure.kn.dudka.usermanagment.User;
+import ua.nure.kn.dudka.usermanagment.db.exception.DataBaseException;
 
 import java.time.LocalDate;
 import java.util.Collection;

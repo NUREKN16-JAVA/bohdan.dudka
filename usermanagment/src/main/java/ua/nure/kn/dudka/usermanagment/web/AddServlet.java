@@ -2,7 +2,7 @@ package ua.nure.kn.dudka.usermanagment.web;
 
 import ua.nure.kn.dudka.usermanagment.User;
 import ua.nure.kn.dudka.usermanagment.db.DAOFactory;
-import ua.nure.kn.dudka.usermanagment.db.DataBaseException;
+import ua.nure.kn.dudka.usermanagment.db.exception.DataBaseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import ua.nure.kn.dudka.usermanagment.agent.exception.SearchException;
 import ua.nure.kn.dudka.usermanagment.gui.UserTableModel;
 import ua.nure.kn.dudka.usermanagment.util.Message;
 

@@ -1,5 +1,7 @@
 package ua.nure.kn.dudka.usermanagment.db;
 
+import ua.nure.kn.dudka.usermanagment.db.exception.DataBaseException;
+
 import java.sql.Connection;
 
 /**

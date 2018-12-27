@@ -1,6 +1,7 @@
 package ua.nure.kn.dudka.usermanagment.db;
 
 import ua.nure.kn.dudka.usermanagment.User;
+import ua.nure.kn.dudka.usermanagment.db.exception.DataBaseException;
 
 import java.util.Collection;
 

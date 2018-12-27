@@ -8,8 +8,9 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import ua.nure.kn.dudka.usermanagment.User;
+import ua.nure.kn.dudka.usermanagment.agent.exception.SearchException;
 import ua.nure.kn.dudka.usermanagment.db.DAOFactory;
-import ua.nure.kn.dudka.usermanagment.db.DataBaseException;
+import ua.nure.kn.dudka.usermanagment.db.exception.DataBaseException;
 
 import java.util.Collection;
 

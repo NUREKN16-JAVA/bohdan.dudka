@@ -1,4 +1,4 @@
-package ua.nure.kn.dudka.usermanagment.db;
+package ua.nure.kn.dudka.usermanagment.db.exception;
 
 /**
  * Class with custom DB exceptions. Checked.

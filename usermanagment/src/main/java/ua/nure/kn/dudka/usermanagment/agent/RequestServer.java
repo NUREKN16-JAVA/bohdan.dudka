@@ -4,7 +4,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import ua.nure.kn.dudka.usermanagment.User;
 import ua.nure.kn.dudka.usermanagment.db.DAOFactory;
-import ua.nure.kn.dudka.usermanagment.db.DataBaseException;
+import ua.nure.kn.dudka.usermanagment.db.exception.DataBaseException;
 
 import java.util.*;
 
