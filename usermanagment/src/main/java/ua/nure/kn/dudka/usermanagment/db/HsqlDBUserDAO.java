@@ -3,6 +3,7 @@ package ua.nure.kn.dudka.usermanagment.db;
 import ua.nure.kn.dudka.usermanagment.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -10,13 +11,14 @@ import java.util.LinkedList;
  * Represents main DAO logic to work with DB
  */
 class HsqlDBUserDAO implements UserDAO {
-    private ConnectionFactory connectionFactory;
-    private final String INSERT_USER = "INSERT INTO USERS (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
+    private static final String FIND_BY_FIRS_AND_LAST = "SELECT id, firstname, lastname, dateofbirth FROM USERS WHERE firstname = ? AND lastname = ?";
     private final String UPDATE_USER = "UPDATE USERS SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
-    private final String FIND_BY_ID = "SELECT * FROM USERS WHERE id = ?";
-    private final String CALL_IDENTITY = "call IDENTITY()";
+    private final String INSERT_USER = "INSERT INTO USERS (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
     private final String FIND_ALL_USERS = "SELECT id, firstname, lastname, dateofbirth FROM users";
+    private final String FIND_BY_ID = "SELECT * FROM USERS WHERE id = ?";
     private final String DELETE_USER = "DELETE FROM USERS WHERE id = ?";
+    private final String CALL_IDENTITY = "call IDENTITY()";
+    private ConnectionFactory connectionFactory;
 
     HsqlDBUserDAO() {
     }
@@ -155,6 +157,38 @@ class HsqlDBUserDAO implements UserDAO {
         }
 
         return user;
+    }
+
+    @Override
+    public Collection find(String firstName, String lastName) throws DataBaseException {
+        Collection<User> result = new ArrayList<>();
+
+        try {
+            Connection connection = connectionFactory.createConnection();
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_FIRS_AND_LAST);
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            ResultSet usersResultSet = statement.executeQuery();
+
+            
+            while (usersResultSet.next()) {
+                User user = new User();
+                user.setId(usersResultSet.getLong(1));
+                user.setFirstName(usersResultSet.getString(2));
+                user.setLastName(usersResultSet.getString(3));
+                Date date = usersResultSet.getDate(4);
+                user.setDateOfBirth(date.toLocalDate());
+                result.add(user);
+            }
+
+            connection.close();
+            statement.close();
+            usersResultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     /**

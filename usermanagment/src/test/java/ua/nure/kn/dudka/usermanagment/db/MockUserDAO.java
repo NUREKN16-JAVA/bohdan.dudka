@@ -37,6 +37,11 @@ public class MockUserDAO implements UserDAO {
     }
 
     @Override
+    public Collection find(String firstName, String lastName) throws DataBaseException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Collection findAll() throws DataBaseException {
         return users.values();
     }
