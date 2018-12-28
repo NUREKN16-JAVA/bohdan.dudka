@@ -69,6 +69,9 @@ public class SearchAgent extends Agent {
         } catch (FIPAException e) {
             e.printStackTrace();
         }
+        gui.setVisible(false);
+        gui.dispose();
+        super.takeDown();
     }
 
     public void search(String firstName, String lastName) throws SearchException {
@@ -84,9 +87,6 @@ public class SearchAgent extends Agent {
         } catch (ReflectiveOperationException e) {
             throw new SearchException(e);
         }
-        gui.setVisible(false);
-        gui.dispose();
-        super.takeDown();
     }
 
     void showUsers(Collection<User> users) {

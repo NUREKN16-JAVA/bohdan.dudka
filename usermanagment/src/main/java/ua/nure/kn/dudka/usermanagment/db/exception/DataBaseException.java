@@ -10,7 +10,7 @@ public class DataBaseException extends Exception {
      * Constructor which set up name for new exception
      * @param name
      */
-    DataBaseException (String name) {
+    public DataBaseException(String name) {
         this.name = name;
     }
 

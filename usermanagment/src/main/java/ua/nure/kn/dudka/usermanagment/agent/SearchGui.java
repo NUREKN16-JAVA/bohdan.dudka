@@ -20,9 +20,7 @@ import ua.nure.kn.dudka.usermanagment.agent.exception.SearchException;
 import ua.nure.kn.dudka.usermanagment.gui.UserTableModel;
 import ua.nure.kn.dudka.usermanagment.util.Message;
 
-/**
- * @author mak
- */
+
 public class SearchGui extends JFrame {
 
     private SearchAgent agent;
@@ -94,9 +92,6 @@ public class SearchGui extends JFrame {
         gui.setVisible(true);
     }
 
-    /**
-     * @author mak
-     */
     class SearchPanel extends JPanel implements ActionListener {
         //        protected JFrame parent;
         SearchAgent agent;
